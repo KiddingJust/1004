@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="create" onkeyup="enterkey()">
+    <input type="text" id="inputlist" placeholder="할일을 입력하세요">
+</div>
+<ul id="list">
+    <input type="checkbox" id="todo">
+</ul>
+</body>
+
+<script>
+    function enterkey() {
+
+        if(window.event.keyCode == 13){
+            createList();
+        }
+    }
+    function createList() {
+
+        var li = document.createElement("li");
+        var inputValue = document.getElementById("input").value;
+        var t = document.createTextNode(inputValue);
+        li.appendChild(t);
+        if (inputValue === '') {
+            alert("할일을 입력해주세요");
+        } else {
+            document.getElementById("list").appendChild(li);
+        }
+        document.getElementById("input").value = "";
+    }
+
+</script>
+</html>

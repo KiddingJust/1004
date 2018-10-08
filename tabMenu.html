@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    body {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .container{
+        width: 80%;
+        height: 100vh;
+        background-color: cornsilk;
+    }
+
+    .upper{
+        margin-top: 10px;
+        padding-top: 10px;
+        padding-left: 5px;
+    }
+    .upper span {
+        color: white;
+        font-size: 2.5em;
+        padding-top: 10px;
+        border-radius: 15px 15px 0px 0px;
+    }
+    #p1 {
+        background-color: darkorange;
+    }
+    #p2 {
+        background-color: orange;
+    }
+    #p3 {
+        background-color: orangered;
+    }
+    .upper span:nth-child(1){
+        background-color: darkorange;
+    }
+    .upper span:nth-child(2){
+        background-color: orange;
+    }
+    .upper span:nth-child(3){
+        background-color: orangered;
+    }
+    .panel {
+        width: 80%;
+        height: 50vh;
+        position: absolute;
+        display: none;
+    }
+
+    .on {
+        display: block;
+    }
+    .cart {
+        margin-top: 50vh;
+    }
+</style>
+
+<div class="container">
+    <div class="upper">
+        <span data-target="p1">Tab 1</span>
+        <span data-target="p2">Tab 2</span>
+        <span data-target="p3">Tab 3</span>
+    </div>
+    <div class="wrapper">
+        <div id="p1" class="panel">
+            PANAL1
+        </div>
+        <div id="p2" class="panel">
+            PANAL2
+        </div>
+        <div id="p3" class="panel">
+            PANAL3
+        </div>
+
+    </div>
+    <div class="cart">
+        CART
+    </div>
+</div>
+
+<script>
+
+    function find(selector){
+        return document.querySelector(selector);
+    }
+
+    //tab 누르면 해당하는 panal이 열리게 하기. 이를 위해 tab에 data-target을 줌.
+    var p1 = find("#p1"), p2 = find("#p2"), p3 = find("#p3");
+
+    var current = p1;
+    //id가 p1인 곳의 class 속성 바꾸기.
+    current.setAttribute("class", "panel p1 on");
+    console.log("p1: " + p1);
+    //addEventListener에는 액션, 함수, false or true 가 들어감.
+    find(".upper").addEventListener("click", (e) => {
+
+        var pid = e.target.getAttribute("data-target");
+        console.log(pid);
+        current.setAttribute("class","panel");
+        var targetPanel = find("#" + pid)
+        targetPanel.setAttribute("class", "panel on")
+        current = targetPanel;
+        }, false);
+
+
+</script>
+
+</body>
+</html>

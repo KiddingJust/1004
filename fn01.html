@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    //일반 함수 선언
+
+    //내부 함수 선언
+    function outer() {
+        var total = 0;
+        function inner() {
+            total ++;
+            console.log(total);
+        }
+        inner();
+        inner();
+        inner();
+        inner();
+    }
+    outer();
+    //파라미터 전달
+
+    //리턴 타입입
+
+</script>
+
+<button id = 'b1' onclick="doA()">click</button>
+<script>
+
+    // var b1 = document.querySelector('#b1');
+    // b1.onclick = function(){
+    //     console.log('aaaa');
+    // };
+
+    function doA(){
+        console.log('aaaa');
+    };
+    b1.onclick = doA;
+
+</script>
+
+<button id = 'b2'>click</button>
+<script>
+    var b2 = document.querySelector('#b2');
+    b2.addEventListener('click', function(){
+        console.log('aaa');
+    }, false);
+
+    // 이러한 형태보다는, 아래 형태가 더 간단함. 그런데 실제로는 위의 코드를 더 많이 씀. 이유는?
+
+    function doA(){
+           console.log('aaa');
+    }
+    b2.addEventListener('click', doA, false);
+
+    // 함수를 파라미터로 던지는 건 일회용이기 때문. 다른 용도로는 사용하지 않을 때 활용함
+
+</script>
+
+</body>
+</html>

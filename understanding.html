@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    function clickButton(event){
+
+    var title = event.target.innerText.trim();              //뭘 클릭했는지?
+    console.log("title: " + title);
+
+</script>
+
+
+<h2 id="display"></h2>
+<button id="b1" onclick="high()">HIGH</button>
+<button id="b2" onclick="low()">LOW</button>
+
+<script>
+    var display = document.querySelector("#display");
+    var current = 0;
+
+    function high(){
+        current ++;
+        display.innerHTML = current;
+    }
+    function low(){
+        current --;
+        display.innerHTML = current;
+    }
+</script>
+
+
+
+<h2 id="display"></h2>
+<button id="b1">HIGH</button>
+<button id="b2">LOW</button>
+
+<h2 id="display2"></h2>
+<button id="b11">HIGH</button>
+<button id="b22">LOW</button>
+
+<script>
+    function box(tag) {
+
+        var target = document.querySelector(tag);
+        var current = 0;
+
+        function high(){
+            current++;
+            target.innerHTML = current;
+        }
+        function low(){
+            current--;
+            target.innerHTML = current;
+        }
+        //자바스크립트에서 객체 만드는 방법 기억하지? 키:값, 키:값
+        return {high: high, low: low};
+    }
+
+    var v1 = box("#display");
+    console.log(v1);    //이쪽까지 하면 {high: f, Low: f} 라 로그에 뜸. 이제 이벤트를 걸 차례
+
+    document.querySelector("#b1").addEventListener("click", v1.high, false);
+    document.querySelector("#b2").addEventListener("click", v1.low, false);
+</script>
+
+
+
+
+<script>
+    //가게를 가지고 오면, 루프를 통해 listUL에 뿌려줌
+    dao.getList(function(stores){
+        var listUL = document.querySelector(".listUL"), str = '', idx = 0;
+
+        //커스텀 뭐시기... 속성을 custom으로 주는 것
+        for(var store of stores) {
+            var storeStr = JSON.stringify(store);
+            str += "<li data-idx='"+ idx++ +"'>" + store.title + "</li>";
+        }
+        //루프로 목록 가져와서 listUL에 뿌림
+        listUL.innerHTML = str;
+    });
+
+    //false는 버블링만 줄 것이기 때문(캡쳐링? 은 안 주니까 false).
+    //getAttribute~ 는 속성값을 불러오는 것.
+    document.querySelector(".listUL").addEventListener("click",
+        function (e){
+            var idx = e.target.getAttribute("data-idx");
+            dao.showMarker(idx);    //클릭하면 showMarker보여주도록.
+        }, false);
+
+    //다음지도 API에서 따옿ㅁ.
+    daum.maps.event.addListener(map, 'dragend', function() {
+
+        // 지도 중심좌표를 얻어옵니다
+        var latlng = map.getCenter();
+        console.log(latlng);
+        //자바스크립트 객체 만들기. 가까운 곳 찾는 것
+        var nnstore = dao.findNNStore({lat:latlng.jb, lng:latlng.ib});
+        console.log(nnstore);
+        //store 받으면 이거 기준으로 marker 뿌려주는 것만 추가하면 완벽하게따
+
+    });
+
+
+</script>
+</body>
+</html>

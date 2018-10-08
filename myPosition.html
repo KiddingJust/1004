@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>지도 생성하기</title>
+
+</head>
+<body>
+
+<!-- 지도를 표시할 div 입니다 -->
+<div id="map" style="width:100%;height:70vh;"></div>
+<div id = "demo"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0bf612a8ab63ef21e81421b961f584f3"></script>
+<script>
+
+    var x = document.getElementById("demo");
+    var targetMarker;
+
+    // 마커에 표시할 인포윈도우를 생성합니다
+    var infowindow = new daum.maps.InfoWindow({
+        content: '현재 위치' // 인포윈도우에 표시할 내용
+    });
+
+    getLocation();
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            // navigator.geolocation.getCurrentPosition(showPosition);
+            // 평소 watchPosition을 더 많이 사용한다.
+            navigator.geolocation.watchPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+
+        x.innerHTML = "현재위치는" +
+            "<br>Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude +
+            "<br>입니다.";
+
+        lat = position.coords.latitude;
+        lng = position.coords.longitude;
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new daum.maps.LatLng(lat, lng), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        var map = new daum.maps.Map(mapContainer, mapOption);
+
+        if(targetMarker) {
+            targetMarker.setMap(null);
+        }
+
+        // 마커가 표시될 위치입니다
+        targetMarker = new daum.maps.Marker({
+            position: new daum.maps.LatLng(lat,lng),
+        });
+
+
+        targetMarker.setMap(map);
+        infowindow.open(map, targetMarker);
+    }
+
+
+</script>
+</body>
+</html>

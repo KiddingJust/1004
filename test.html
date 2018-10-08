@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<ul id="listUL"></ul>
+
+<script>
+
+    // li 태그를 직접 만든 것. DOM에만 만들고 직접 뿌리진 않음(메모리 상에 객체를 만드는 것이라 생각하면 됨)
+    var listUL = document.querySelector("#listUL");
+
+    for(var i = 0; i < 10; i++){
+
+        //함수가 아닌 곧바로 console.log(idx)를 반환하면 0,1,2,3,4,5,6,7,9가 콘솔에 출력됨. 이제 이걸 활용하는 함수가 필요해짐.
+        //fn이라는 함수를 실행할 때 다시 함수를 실행시키는 것.
+        //fn(0)인 경우, 실행과 동시에 자기만의 공간을 갖게 된다. 그리고 새로운 함수를 return한다. 그 함수는 console.log(idx)를 한다. 하지만 idx를 자체적으로 갖고 있지 않기에,
+        //fn 실행 시 생긴 공간을 활용한다(흐음). 아무튼 우리가 클릭했을 땐, fnReal이 실행되어야 함.
+        var fn = function(idx){
+            return  function () {
+                console.log(idx);
+            }
+        };
+
+        var fnReal = fn(i);
+
+        var li = document.createElement("li");
+
+        li.innerHTML = "AAA" + i ;
+
+        li.addEventListener("click", fnReal, false);
+        // appendChild > 루프 도는 동안 화면을 갱신. DOM을 10번 갱신하는 것. 성능은 나빠지므로 잘 쓰지 않음.
+        listUL.appendChild(li);
+    }
+
+</script>
+</body>
+</html>
